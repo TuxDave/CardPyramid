@@ -1,5 +1,6 @@
 package com.tuxdave.cardpyramid.cracker.tree;
 
+import com.tuxdave.cardpyramid.cracker.CrackerKt;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +16,7 @@ import java.util.Arrays;
 @Getter
 public class Node {
     private final int[] state;
-    @Setter
-    private Node[] siblings;
+    private final Node[] siblings;
     private int livingSiblings;
 
     /**
@@ -25,7 +25,7 @@ public class Node {
      * il numero corretto di figli viene calcolato automaticamente in base allo stato della partita
      */
     public Node(int[] state){
-        this(state, 0); //TODO: inserire un corretto numero di figli, calcolabile tramite un algoritmo che verrà sviluppato succesivamente
+        this(state, CrackerKt.getPossibleMovesNumber(state));
     }
 
     /**

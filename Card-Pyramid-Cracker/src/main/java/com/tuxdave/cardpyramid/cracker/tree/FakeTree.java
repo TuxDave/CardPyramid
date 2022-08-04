@@ -20,7 +20,7 @@ public class FakeTree {
      * @param game lo stato della partita da cui memorizzare l'albero delle possibilità
      */
     public FakeTree(int[] game){
-        root = new Node(Node.reduce(game),2);//TODO: TOGLIERE
+        root = new Node(Node.reduce(game));
         alreadyComputedGames = new HashSet<>();
         alreadyComputedGames.add(root.getState());
     }
