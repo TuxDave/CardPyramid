@@ -3,6 +3,8 @@ package com.tuxdave.cardpyramid.cracker.tree;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Arrays;
+
 /**
  * classe che memorizza lo stato della partita.<br>
  * il turno di quale giocatore è deducibile dalla parità o disparità della mossa.<br>
@@ -43,12 +45,15 @@ public class Node {
     /**
      * aggiunge un nodo come figlio al nodo corrente
      * @param node il nodo da aggiungere
+     * @param ft the tree which is the node owned by, used to update some its values
      * @return true se c'è posto e lo aggiunge, false se fallisce l'aggiunta o il nodo è null
      */
-    public boolean add(Node node){
+    public boolean add(Node node, FakeTree ft){
         if(node == null) return false;
+        Arrays.sort(node.state);
         if(livingSiblings + 1 <= siblings.length){
             siblings[livingSiblings++] = node;
+            ft.getAlreadyComputedGames().add(ft.gamesPool.get(node.state));
             return true;
         }
         return false;
@@ -57,9 +62,10 @@ public class Node {
     /**
      * rimuove un nodo dai figli
      * @param node il RIFERIMENTO al nodo da rimuovere
+     * @param ft the tree which is the node owned by, used to update some of its values
      * @return true se trova il nodo da eliminare e lo elimina, false se non lo trova o è null
      */
-    public boolean remove(Node node){
+    public boolean remove(Node node, FakeTree ft){
         if(node == null) return false;
         for(int i = 0; i < livingSiblings; i++){
             if(siblings[i] == node){
@@ -69,6 +75,7 @@ public class Node {
                 }
                 siblings[livingSiblings-1] = null;
                 livingSiblings--;
+                if(ft.searchNodeByState(node.state) == null) ft.getAlreadyComputedGames().remove(ft.gamesPool.get(node.state));
                 return true;
             }
         }

@@ -1,29 +1,20 @@
+import com.tuxdave.cardpyramid.cracker.tree.FakeTree;
+import com.tuxdave.cardpyramid.cracker.tree.Node;
+
+import java.util.Arrays;
+
 public class T1 {
     public static void main(String[] args) {
-        int livingSiblings = 5;
-        Integer[] siblings = new Integer[]{1,2,3,4,5};
-        Integer node = siblings[2];
-        for(int i = 0; i < livingSiblings; i++){
-            if(siblings[i] == node){
-                siblings[i] = null;
-                for(int j = i; j < livingSiblings-1; j++){
-                    siblings[j] = siblings[j+1];
-                }
-                siblings[livingSiblings-1] = null;
-                livingSiblings--;
+        FakeTree ft = new FakeTree(new int[]{1,2,3,4,5});
+        ft.getRoot().add(new Node(new int[]{1,2,3,4,4}), ft);
+        ft.getRoot().add(new Node(new int[]{1,2,3,4,4}), ft);
+        System.out.println(ft.getAlreadyComputedGames().size());
+        for(int[] s : ft.getAlreadyComputedGames()){
+            for(int k : s){
+                System.out.print(k + " "); //TODO: Capire perchè
             }
+            System.out.println();
         }
-        node = siblings[2];
-        for(int i = 0; i < livingSiblings; i++){
-            if(siblings[i] == node){
-                siblings[i] = null;
-                for(int j = i; j < livingSiblings-1; j++){
-                    siblings[j] = siblings[j+1];
-                }
-                siblings[livingSiblings-1] = null;
-                livingSiblings--;
-            }
-        }
-        System.out.println(siblings[4]);
+        System.out.println(ft.searchNodeByState(new int[]{1,2,4,4,3}));
     }
 }
