@@ -1,9 +1,10 @@
 package com.tuxdave.cardpyramid.cracker.tree
 
+import com.sun.jdi.event.BreakpointEvent
 import java.util.*
 
 fun Node.display(tabs: Int = 0): String{
-    return ("  ".repeat(tabs)) + Arrays.deepToString(this.state.toTypedArray())
+    return ("\t".repeat(tabs)) + Arrays.deepToString(this.state.toTypedArray())
 }
 
 fun FakeTree.display(): String{
@@ -15,10 +16,15 @@ fun FakeTree.display(): String{
 
 var tabs = 0;
 fun explodeNode(nodo: Node, base: String = ""): String{
-    var ret = base + nodo.display(tabs) +  "\n"
-    for(son in nodo.siblings){
-        ret += explodeNode(son, ret) //TODO capire la ragione del OverFlow
+    var ret = base + nodo.display(tabs++) +  "\n"
+    if(nodo.siblings.size == 0){
+        tabs--
     }
-    ret += "\n"
+    for(son in nodo.siblings){
+        ret += explodeNode(son)
+        if(son == nodo.siblings.last()){
+            tabs--
+        }
+    }
     return ret
 }

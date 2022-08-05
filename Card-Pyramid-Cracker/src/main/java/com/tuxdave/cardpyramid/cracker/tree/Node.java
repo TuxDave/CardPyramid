@@ -87,7 +87,7 @@ public class Node {
      * @param state la partita
      * @return la partita semplificata
      */
-    static int[] reduce(int[] state){
+    public static int[] reduce(int[] state){
         int n = 0;
         for (int k : state) {
             if (k != 0) n++;

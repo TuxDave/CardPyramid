@@ -90,7 +90,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.tuxdave.cardpyramid.cracker.Main</mainClass>
+                            <mainClass>com.tuxdave.cardpyramid.cracker.CardPyramidCracker</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

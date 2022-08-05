@@ -1,7 +1,11 @@
 package com.tuxdave.cardpyramid.cracker;
 
+import com.tuxdave.cardpyramid.cracker.tree.FakeTree;
+import com.tuxdave.cardpyramid.cracker.tree.UiKt;
+
 public class CardPyramidCracker {
     public static void main(String[] args) {
-        System.out.println("wewe");
+        FakeTree tree = CrackerKt.crack(5);
+        System.out.println(UiKt.display(tree));
     }
 }

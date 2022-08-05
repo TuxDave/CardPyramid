@@ -6,6 +6,7 @@ package com.tuxdave.cardpyramid.cracker
 
 import com.tuxdave.cardpyramid.cracker.tree.FakeTree
 import com.tuxdave.cardpyramid.cracker.tree.Node
+import com.tuxdave.cardpyramid.cracker.tree.display
 import java.util.*
 
 /**
@@ -42,7 +43,9 @@ fun getAllPossibleMoves(state: IntArray): Array<IntArray>{
         val cards = state[layer]
         for(card in 1 .. cards){
             ret[nRet] = state.clone()
-            ret[nRet++]!![layer] -= card
+            ret[nRet]!![layer] -= card
+            //ret[nRet] = Node.reduce(ret[nRet])
+            nRet++
         }
     }
     return ret.requireNoNulls();
@@ -62,14 +65,19 @@ fun isGameFinished(state: IntArray): Boolean{
 
 fun addCasesToTree(ft: FakeTree, father: Node){
     val cases: Array<IntArray> = getAllPossibleMoves(father.state)
+    for(i in 0 until cases.size){
+        cases[i] = ft.gamesPool.get(cases[i])
+    }
     for(case in cases){
         val nodo: Node
         if(case in ft.alreadyComputedGames){
-            nodo = ft.searchNodeByState(ft.gamesPool.get(case))
+            nodo = ft.gamesPool.getMemoized(case)//ft.searchNodeByState(ft.gamesPool.get(case))
         }else{
             nodo = Node(case)
             addCasesToTree(ft, nodo)
+            ft.gamesPool.set(case, nodo)
         }
+        //println("${nodo.hashCode()} - ${nodo.display()}")
         father.add(nodo, ft)
     }
 }
@@ -77,5 +85,6 @@ fun addCasesToTree(ft: FakeTree, father: Node){
 fun crack(n: Int): FakeTree{
     val ft = FakeTree(genGame(n));
     addCasesToTree(ft, ft.root)
+    //println("ALBERO CALCOLATO")
     return ft
 }

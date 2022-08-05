@@ -41,6 +41,7 @@ public class FakeTree {
         state = gamesPool.get(state);
         if(!alreadyComputedGames.contains(state)) return null;
         for(Node n : root.getSiblings()){
+            if(n == null) continue;
             if(Arrays.equals(n.getState(),  state)){
                 return n;
             }else {
