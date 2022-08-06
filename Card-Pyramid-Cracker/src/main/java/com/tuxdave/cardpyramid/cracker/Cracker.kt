@@ -30,7 +30,7 @@ fun Int.factorial(): Int{
  * @param state lo stato del campo da calcolare
  */
 fun getPossibleMovesNumber(state: IntArray): Int {
-    return state.sum()
+    return state.sum() - if(state.size == 1) 1 else 0
 }
 
 /**
@@ -39,12 +39,13 @@ fun getPossibleMovesNumber(state: IntArray): Int {
 fun getAllPossibleMoves(state: IntArray): Array<IntArray>{
     val ret: Array<IntArray?> = arrayOfNulls<IntArray>(getPossibleMovesNumber(state))
     var nRet = 0;
+    val less = if(state.size == 1) 1 else 0
     for(layer in 0 until state.size){
-        val cards = state[layer]
+        val cards = state[layer] - less//======================================================
         for(card in 1 .. cards){
             ret[nRet] = state.clone()
             ret[nRet]!![layer] -= card
-            //ret[nRet] = Node.reduce(ret[nRet])
+            //ret[nRet] = Node.reduce(ret[nRet]) // TODO: decommentare quando la UI funzionerà
             nRet++
         }
     }
@@ -63,10 +64,11 @@ fun isGameFinished(state: IntArray): Boolean{
     return getPossibleMovesNumber(state) == 0
 }
 
+var c = 0
 fun addCasesToTree(ft: FakeTree, father: Node){
     val cases: Array<IntArray> = getAllPossibleMoves(father.state)
     for(i in 0 until cases.size){
-        cases[i] = ft.gamesPool.get(cases[i])
+        cases[i] = ft.gamesPool.get(Node.reduce(cases[i]))
     }
     for(case in cases){
         val nodo: Node
@@ -79,6 +81,7 @@ fun addCasesToTree(ft: FakeTree, father: Node){
         }
         //println("${nodo.hashCode()} - ${nodo.display()}")
         father.add(nodo, ft)
+        //println(c++)
     }
 }
 
