@@ -45,7 +45,7 @@ fun getAllPossibleMoves(state: IntArray): Array<IntArray>{
         for(card in 1 .. cards){
             ret[nRet] = state.clone()
             ret[nRet]!![layer] -= card
-            ret[nRet] = Node.reduce(ret[nRet]) // TODO: decommentare quando la UI funzionerà
+            ret[nRet] = Node.reduce(ret[nRet])
             nRet++
         }
     }

@@ -29,5 +29,5 @@ fun explodeNode(nodo: Node, base: String = ""): String{
         }
         c++;
     }
-    return ret//TODO: Capire perchè finisce a -1
+    return ret
 }
