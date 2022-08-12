@@ -20,11 +20,14 @@ fun explodeNode(nodo: Node, base: String = ""): String{
     if(nodo.siblings.size == 0){
         tabs--
     }
+    var c = 0
     for(son in nodo.siblings){
         ret += explodeNode(son)
-        if(son == nodo.siblings.last()){
+        //questo controllo per via della memoization fa attivare il controllo anche se non è effettivamente l'ultimo
+        if(son == nodo.siblings.last() && c == nodo.siblings.lastIndexOf(son)){
             tabs--
         }
+        c++;
     }
     return ret//TODO: Capire perchè finisce a -1
 }
