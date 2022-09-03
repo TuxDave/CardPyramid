@@ -53,7 +53,7 @@ public class Node {
         Arrays.sort(node.state);
         if(livingSiblings + 1 <= siblings.length){
             siblings[livingSiblings++] = node;
-            ft.getAlreadyComputedGames().add(ft.gamesPool.get(node.state));
+            ft.getAlreadyComputedGames().add(ft.gamesPool.get(reduce(node.state)));
             return true;
         }
         return false;
@@ -88,18 +88,23 @@ public class Node {
      * @return la partita semplificata
      */
     public static int[] reduce(int[] state){
+        state = state.clone();
         int n = 0;
         for (int k : state) {
             if (k != 0) n++;
         }
-        if(n == state.length) return state;
-        int[] nState = new int[n];
-        n = 0;
-        for (int j : state) {
-            if (j != 0) {
-                nState[n++] = j;
+        if(n != state.length){
+            int[] nState = new int[n];
+            n = 0;
+            for (int j : state) {
+                if (j != 0) {
+                    nState[n++] = j;
+                }
             }
+            Arrays.sort(nState);
+            return nState;
         }
-        return nState;
+        Arrays.sort(state);
+        return state;
     }
 }
