@@ -1,6 +1,7 @@
 package com.tuxdave.cardpyramid.cracker.utils;
 
 import com.tuxdave.cardpyramid.cracker.tree.Node;
+import kotlin.jvm.Synchronized;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,7 @@ public class ArrayPool {
         pool = new HashMap<int[], Node>();
     }
 
+//    @Synchronized
     public int[] get(int[] values){
         for(int[] value : pool.keySet()){
             if(Arrays.equals(value, values)){
