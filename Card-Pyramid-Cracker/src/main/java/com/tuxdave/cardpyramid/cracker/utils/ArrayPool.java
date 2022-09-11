@@ -15,8 +15,7 @@ public class ArrayPool {
         pool = new HashMap<int[], Node>();
     }
 
-//    @Synchronized
-    public int[] get(int[] values){
+    public synchronized int[] get(int[] values){
         for(int[] value : pool.keySet()){
             if(Arrays.equals(value, values)){
                 return value;
@@ -26,7 +25,7 @@ public class ArrayPool {
         return values;
     }
 
-    public Node getMemoized(int[] key){
+    public synchronized Node getMemoized(int[] key){
         return pool.get(key);
     }
 
